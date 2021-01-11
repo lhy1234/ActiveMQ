@@ -154,6 +154,8 @@ message.acknowledge();
 
 该选择只是会话迟钝的确认消息的提交。如果JMS Provider失败，那么可能会导致一些重复的消息。
 
+ Session不必确保对传送消息的签收，这个模式可能会引起消息的重复，但是降低了Session的开销，所以只有客户端能容忍重复的消息，才可使用。 
+
 
 
 针对点对点Queue，不管是开启事务：
@@ -179,6 +181,8 @@ while(true){
             System.err.println("receive ： "+message.getText());
         }
 ```
+
+### 多个消费者消费同一个队列
 
 只要有客户端调用了consumer.receive();方法，**在receive的窗口期**，这条消息会被该客户端“锁定”，即使别的客户端也连接了同一个producer，也调用了receive();方法，也是不能消费到这个消息的，除非第一个消费者下线，第二个消费者才能获取到这条消息。
 

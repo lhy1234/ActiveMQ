@@ -2,6 +2,16 @@
 
  发布订阅和点对点的代码基本相同，只是修改一下目的地，在创建目的地的时候，将createQueue改为createTopic。 
 
+topic的消息默认不持久化
+
+消费者要比生产者先上线才能接收到消息
+
+没有被消费的消息默认存在内存里，重启后就没有了。
+
+![1610267350781](D:\Z_lhy\STUDY\ActiveMQ\doc\img\1610267350781.png)
+
+
+
 ## TopicPublisher 
 
 ```java

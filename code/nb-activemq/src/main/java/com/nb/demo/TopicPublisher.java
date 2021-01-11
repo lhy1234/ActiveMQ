@@ -24,8 +24,8 @@ public class TopicPublisher {
             //3. 创建一个Session 第一个参数：是否是事务消息 第二个参数：消息确认机制（自动确认还是手动确认）
             session = connection.createSession(Boolean.FALSE, Session.AUTO_ACKNOWLEDGE);
             //4. 有了session之后，就可以创建消息，目的地，生产者和消费者
-            for(int i=0;i<100;i++){
-                TextMessage message = session.createTextMessage("Hello ActiveMQ");
+            for(int i=0;i<10;i++){
+                TextMessage message = session.createTextMessage("Hello ActiveMQ--"+i);
                 //目的地
                 Destination destination = session.createTopic(DESTINATION);
                 //生产者

@@ -1,5 +1,35 @@
 # ActiveMQ持久化消息与非持久化消息
 
+使用默认的持久化机制，broker重启后消息不会丢失。
+
+![1610069431273](D:\Z_lhy\STUDY\ActiveMQ\doc\img\1610069431273.png)
+
+我们不容易直接看到消息究竟是如何持久的。ActiveMQ提供的JDBC持久化机制，能够将持久化信息存储到数据库。通过查看数据库中ActiveMQ生成的表结构和存储的数据，能够帮助我们更好的了解消息的持久化机制。现在介绍如何配置activemq，将数据持久化到mysql中。 
+
+![1610069459014](D:\Z_lhy\STUDY\ActiveMQ\doc\img\1610069459014.png)
+
+
+
+设置不持久化：
+
+```java
+producer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
+```
+
+MQ控制台：
+
+![1610069862384](D:\Z_lhy\STUDY\ActiveMQ\doc\img\1610069862384.png)
+
+mysql数据库：
+
+![1610069888548](D:\Z_lhy\STUDY\ActiveMQ\doc\img\1610069888548.png)
+
+重启broker，消息丢失：
+
+![1610070073676](D:\Z_lhy\STUDY\ActiveMQ\doc\img\1610070073676.png)
+
+# 持久化
+
 ### KahaDB存储
 
 ![1609597201733](D:\Z_lhy\STUDY\ActiveMq\doc\img\1609597201733.png)
