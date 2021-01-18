@@ -14,7 +14,7 @@ public class TopicSubscriber {
         Connection connection = connectionFactory.createConnection();
         connection.start();
         Session session = connection.createSession(Boolean.FALSE, Session.AUTO_ACKNOWLEDGE);
-        Destination destination = session.createTopic("user");
+        Destination destination = session.createTopic("sixin");
         MessageConsumer messageConsumer = session.createConsumer(destination);
         while (true){
             //接收消息 有返回值，是阻塞的

@@ -14,8 +14,10 @@ public class TopicPublisher {
         //4. 有了session之后，就可以创建消息，目的地，生产者和消费者
         for(int i=0;i<10;i++){
             TextMessage message = session.createTextMessage("msg--"+i);
-            Destination destination = session.createTopic("user");
+            Destination destination = session.createTopic("sixin");
             MessageProducer producer = session.createProducer(destination);
+            producer.setDeliveryMode(DeliveryMode.PERSISTENT);
+            producer.setTimeToLive(10);
             producer.send(message);
             System.err.println("pub------"+message.getText());
 

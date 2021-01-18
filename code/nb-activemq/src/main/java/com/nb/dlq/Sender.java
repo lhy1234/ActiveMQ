@@ -18,13 +18,10 @@ public class Sender {
         Connection connection = connectionFactory.createConnection();
         connection.start();//启动连接,Connection默认是关闭的
         Session session = connection.createSession(false,Session.AUTO_ACKNOWLEDGE);
-        Queue queue = session.createQueue("NB-TTL");
+        Queue queue = session.createQueue("user");
         MessageProducer producer = session.createProducer(queue);
-        producer.setTimeToLive(5000);
-        //producer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
-
-
-        for(int i=0;i<20;i++){
+        producer.setTimeToLive(1000);
+        for(int i=0;i<10;i++){
             TextMessage textMessage = session.createTextMessage("nb --- "+i);
             producer.send(textMessage);
             System.err.println("send -- "+ textMessage.getText());

@@ -18,11 +18,28 @@ public class Receiver {
         Connection connection = connectionFactory.createConnection();
         connection.start();
         Session session = connection.createSession(false,Session.AUTO_ACKNOWLEDGE);
-        Queue queue = session.createQueue("NB-TTL");
+        Queue queue = session.createQueue("user");
         MessageConsumer consumer = session.createConsumer(queue);
-        while(true){
-            TextMessage message = (TextMessage)consumer.receive();
-            System.err.println("receive --- "+message.getText());
-        }
+        //监听目的地
+        consumer.setMessageListener(message -> {
+            TextMessage textMessage = (TextMessage)message;
+            try {
+                System.err.println("textMessage="+textMessage.getText());
+            } catch (JMSException e) {
+                e.printStackTrace();
+            }
+        });
+
+        //监听死信队列
+//        Queue dlq = session.createQueue("ActiveMQ.DLQ");
+//        MessageConsumer dlqConsumer = session.createConsumer(dlq);
+//        dlqConsumer.setMessageListener((message)->{
+//            TextMessage textMessage = (TextMessage)message;
+//            try {
+//                System.err.println("死信队列消息："+textMessage.getText());
+//            } catch (JMSException e) {
+//                e.printStackTrace();
+//            }
+//        });
     }
 }
