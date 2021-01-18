@@ -9,14 +9,12 @@ import javax.jms.*;
  */
 public class TopicSubscriber {
 
-    public static final String BROKER_URL = "tcp://127.0.0.1:61616";
-    public static final String DESTINATION = "NB-timeout";
     public static void main(String[] args) throws Exception {
-        ConnectionFactory connectionFactory = new ActiveMQConnectionFactory("system","123456",BROKER_URL);
+        ConnectionFactory connectionFactory = new ActiveMQConnectionFactory("system","123456","tcp://127.0.0.1:61616");
         Connection connection = connectionFactory.createConnection();
         connection.start();
         Session session = connection.createSession(Boolean.FALSE, Session.AUTO_ACKNOWLEDGE);
-        Destination destination = session.createTopic(DESTINATION);
+        Destination destination = session.createTopic("user");
         MessageConsumer messageConsumer = session.createConsumer(destination);
         while (true){
             //接收消息 有返回值，是阻塞的
