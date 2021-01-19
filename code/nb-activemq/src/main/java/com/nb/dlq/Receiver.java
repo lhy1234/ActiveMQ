@@ -18,7 +18,7 @@ public class Receiver {
         Connection connection = connectionFactory.createConnection();
         connection.start();
         Session session = connection.createSession(false,Session.AUTO_ACKNOWLEDGE);
-        Queue queue = session.createQueue("user");
+        Queue queue = session.createQueue("user?consumer.exclusive=true");
         MessageConsumer consumer = session.createConsumer(queue);
         //监听目的地
         consumer.setMessageListener(message -> {

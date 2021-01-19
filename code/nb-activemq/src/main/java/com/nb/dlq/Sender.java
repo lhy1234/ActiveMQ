@@ -20,11 +20,16 @@ public class Sender {
         Session session = connection.createSession(false,Session.AUTO_ACKNOWLEDGE);
         Queue queue = session.createQueue("user");
         MessageProducer producer = session.createProducer(queue);
-        producer.setTimeToLive(1000);
-        for(int i=0;i<10;i++){
+        //producer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
+        //producer.setTimeToLive(2000);
+
+
+
+        for(int i=0;i<100;i++){
             TextMessage textMessage = session.createTextMessage("nb --- "+i);
             producer.send(textMessage);
             System.err.println("send -- "+ textMessage.getText());
+            Thread.sleep(1000);
         }
 
         connection.close();
