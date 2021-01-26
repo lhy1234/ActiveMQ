@@ -2,8 +2,18 @@
 spring:
   application:
     name: nb-activemq
-# 应用服务 WEB 访问端口
-
+  activemq:
+    broker-url: tcp://localhost:61616
+    user: admin
+    password: admin
+    pool:
+      enabled: true
+      #连接池最大连接数
+      max-connections: 5
+      #空闲的连接过期时间，默认30秒
+      idle-timeout: 0
+    packages:
+      trust-all: true
 
 
 server:
