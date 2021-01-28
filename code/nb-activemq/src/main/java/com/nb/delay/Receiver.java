@@ -15,8 +15,10 @@ public class Receiver {
 
         String brokerURL = "tcp://localhost:61616";// 启动console可以看见此端口
         ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("system","123456",brokerURL);
+
         Connection connection = connectionFactory.createConnection();
         connection.start();
+
         Session session = connection.createSession(false,Session.AUTO_ACKNOWLEDGE);
         Queue queue = session.createQueue("user");
         MessageConsumer consumer = session.createConsumer(queue);
