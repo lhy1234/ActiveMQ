@@ -26,9 +26,9 @@ public class Receiver {
 
         //监听目的地
         consumer.setMessageListener(message -> {
-            TextMessage textMessage = (TextMessage)message;
+            MapMessage mapMessage = (MapMessage)message;
             try {
-                System.err.println("textMessage="+textMessage.getText());
+                System.err.println("mapMessage="+mapMessage.getString("trainCampId"));
             } catch (JMSException e) {
                 e.printStackTrace();
             }

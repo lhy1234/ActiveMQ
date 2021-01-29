@@ -13,7 +13,7 @@ public class Receiver {
 
     public static void main(String[] args) throws Exception{
 
-        String brokerURL = "tcp://localhost:61616?jms.producerWindowSize=1";
+        String brokerURL = "tcp://localhost:61616?jms.producerWindowSize=10";
         ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("system","123456",brokerURL);
         Connection connection = connectionFactory.createConnection();
         connection.start();

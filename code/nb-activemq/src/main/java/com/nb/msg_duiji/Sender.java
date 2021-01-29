@@ -14,7 +14,7 @@ public class Sender {
 
 
         //producer每发送一个消息，统计一下发送的字节数，当字节数达到ProducerWindowSize值时，需要等待broker的确认，才能继续发送。
-        String brokerURL = "tcp://localhost:61616?jms.producerWindowSize=1";
+        String brokerURL = "tcp://localhost:61616?jms.producerWindowSize=10";
         ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("system","123456",brokerURL);
         Connection connection = connectionFactory.createConnection();
         connection.start();//启动连接
