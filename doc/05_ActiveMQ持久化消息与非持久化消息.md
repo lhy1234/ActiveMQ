@@ -205,7 +205,7 @@ CREATE TABLE `activemq_msgs` (
 
  LevelDB持久化性能高于KahaDB，虽然目前默认的持久化方式仍然是KahaDB。并且，在ActiveMQ 5.9版本提供 了基于LevelDB和Zookeeper的数据复制方式，用于Master-slave方式的首选数据复制方案。 但是在ActiveMQ官网对LevelDB的表述：LevelDB官方建议使用以及不再支持，推荐使用的是KahaDB 
 
-### Memory 消息存储
+### Memory 消/息存储
 
  顾名思义，基于内存的消息存储，就是消息存储在内存中。persistent=”false”,表示不设置持 久化存储，直接存储到内存中 在broker标签处设置。 
 
@@ -213,4 +213,36 @@ CREATE TABLE `activemq_msgs` (
 
 这种方式克服了JDBC Store的不足，JDBC存储每次消息过来，都需要去写库和读库。 ActiveMQ Journal，使用延迟存储数据到数据库，当消息来到时先缓存到文件中，延迟后才写到数据库中。
 
-当消费者的消费速度能够及时跟上生产者消息的生产速度时，journal文件能够大大减少需要写入到DB中的消息。 举个例子，生产者生产了1000条消息，这1000条消息会保存到journal文件，如果消费者的消费速度很快的情况 下，在journal文件还没有同步到DB之前，消费者已经消费了90%的以上的消息，那么这个时候只需要同步剩余的 10%的消息到DB。 如果消费者的消费速度很慢，这个时候journal文件可以使消息以批量方式写到DB。
+当消费者的消费速度能够及时跟上生产者消息的生产速度时，journal文件能够大大减少需要写入到DB中的消息。 举个例子，生产者生产了1000条消息，这1000条消息会保存到journal文件，如果消费者的消费速度很快的情况 下，在journal文件还没有同步到DB之前，消费者已经消费了90%的以上的消息，那么这个时候只需要同步剩余的 10%的消息到DB。 如果消费者的消费速度很慢，这个时候journal文件可以使消息以**批量**方式写到DB。
+
+![1612085642097](\img\1612085642097.png)
+
+activemq.xml配置文件里头的一个持久化配置：
+
+```xml
+ <systemUsage>
+            <systemUsage>
+                <memoryUsage>
+                    <!--只能用JVM内存空间的70%-->
+                    <memoryUsage percentOfJvmHeap="70" />
+                </memoryUsage>
+                <storeUsage>
+                    <!--这一个节点最大能用磁盘空间的大小，只适用于kahaDB不适用mysql，假设磁盘只有20g，这就只能用20g，只认启动状态的可用空间，扩容的不认。
+					-->
+                    <storeUsage limit="100 gb"/>
+                </storeUsage>
+                <tempUsage>
+                    <!--不持久化的消息，当memoryUsage内存满了之后，能用的磁盘空间-->
+                    <tempUsage limit="50 gb"/>
+                </tempUsage>
+            </systemUsage>
+        </systemUsage>
+```
+
+
+
+
+
+### 总结
+
+生产用kahaDB
