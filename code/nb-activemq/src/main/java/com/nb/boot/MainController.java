@@ -19,4 +19,10 @@ public class MainController {
         senderSrv.send("springboot","hello~!");
         return "ok";
     }
+
+    @RequestMapping("send2")
+    public String send2() {
+        senderSrv.send4("hello~!");
+        return "ok";
+    }
 }

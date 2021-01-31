@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsMessagingTemplate;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.jms.*;
@@ -20,9 +21,18 @@ public class SenderService {
 
     @Autowired
     private JmsMessagingTemplate jmsMessagingTemplate;
-
     @Autowired
     private JmsTemplate jmsTemplate;
+
+    @Autowired
+    private ActiveMQQueue nbQueue;
+
+    public void send4(String msg){
+        jmsMessagingTemplate.convertAndSend(nbQueue,msg);
+    }
+
+
+
 
     public void send(String destination,String message){
         ConnectionFactory connectionFactory = jmsTemplate.getConnectionFactory();
