@@ -28,6 +28,7 @@ public class Sender {
         NotifyPlan notifyPlan = getNotifyPlan();
 
         MapMessage mapMessage = session.createMapMessage();
+
         mapMessage.setString("trainCampId",notifyPlan.getObjectId());
         //延迟10秒发送
 //        message.setLongProperty(ScheduledMessage.AMQ_SCHEDULED_DELAY, 10*1000);
